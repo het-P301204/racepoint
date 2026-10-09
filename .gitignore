@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+.env.local
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.egg-info/
+lab/data/
+*.db
+.DS_Store
+Thumbs.db
+.vite/
+coverage/
+.pytest_cache/
