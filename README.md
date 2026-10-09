@@ -18,10 +18,6 @@
   <img src="https://img.shields.io/badge/License-MIT-9282ad?style=flat-square" alt="MIT"/>
 </p>
 
-<br/>
-
-<img src="docs/screenshots/01-landing.jpg" alt="RACEPOINT Landing" width="100%"/>
-
 </div>
 
 ---
@@ -36,66 +32,39 @@ Every vulnerability has a name, a scenario, real exploit evidence, and a side-by
 
 ## Screenshots
 
-<table>
-<tr>
-<td width="50%">
+<div align="center">
+<img src="docs/screenshots/01-landing.jpg" alt="RACEPOINT Landing" width="700"/>
+<br/>
+<sub><b>Landing page — RACEPOINT Research Platform v0.1.0</b></sub>
+</div>
 
-### Research Dashboard
-Live metrics from 43 research runs across 20 scenarios. Violation rate, race-window counts, evidence density, and comparison coverage at a glance.
+<br/>
 
-<img src="docs/screenshots/02-overview.jpg" alt="Research Dashboard" width="100%"/>
+<img src="docs/screenshots/02-overview.jpg" alt="Research Dashboard" width="49%"/> <img src="docs/screenshots/03-race-timeline.jpg" alt="Race Timeline" width="49%"/>
 
-</td>
-<td width="50%">
+> **Left — Research Dashboard:** Live metrics from 43 research runs across 20 scenarios. Violation rate, race-window counts, evidence density, comparison coverage.  
+> **Right — Race Timeline:** Frame-accurate request replay with scrubable playback. Race windows highlighted between concurrent check-and-act operations.
 
-### Race Timeline
-Frame-accurate request replay with scrub controls. Every HTTP request is drawn on its own lane; race windows are highlighted as they open between concurrent operations.
+<br/>
 
-<img src="docs/screenshots/03-race-timeline.jpg" alt="Race Timeline" width="100%"/>
+<img src="docs/screenshots/04-scenarios.jpg" alt="Scenario Library" width="49%"/> <img src="docs/screenshots/05-evidence.jpg" alt="Evidence Vault" width="49%"/>
 
-</td>
-</tr>
-<tr>
-<td width="50%">
+> **Left — Scenario Library:** 20 curated race conditions organized by category with CWE classification, CVSS severity, and technical breakdown.  
+> **Right — Evidence Vault:** 49 captured evidence records with per-result filter chips (Violated / Preserved / Inconclusive) and JSON export.
 
-### Scenario Library
-20 curated race conditions organized by category: HTTP, Database, Filesystem, Distributed. Each entry includes CVE context, CVSS severity, CWE classification, and a technical breakdown.
+<br/>
 
-<img src="docs/screenshots/04-scenarios.jpg" alt="Scenario Library" width="100%"/>
+<img src="docs/screenshots/06-comparisons.jpg" alt="Vulnerability Comparisons" width="49%"/> <img src="docs/screenshots/07-attack-lab.jpg" alt="Attack Lab" width="49%"/>
 
-</td>
-<td width="50%">
+> **Left — Vulnerability Comparisons:** 16 side-by-side comparisons of vulnerable vs hardened runs. Race-window counts, runtime deltas, mitigation type, prose analysis.  
+> **Right — Attack Lab:** Live execution engine. Pick a scenario, choose vulnerable or hardened mode, configure concurrency, fire.
 
-### Evidence Vault
-49 captured evidence records with per-record drawer detail. Filter by result (Violated / Preserved / Inconclusive), search by scenario or event type, and export to JSON.
-
-<img src="docs/screenshots/05-evidence.jpg" alt="Evidence Vault" width="100%"/>
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-### Vulnerability Comparisons
-16 side-by-side comparisons of vulnerable vs hardened runs. Race-window counts, runtime deltas, mitigation type, and a prose analysis explaining why each fix works.
-
-<img src="docs/screenshots/06-comparisons.jpg" alt="Comparisons" width="100%"/>
-
-</td>
-<td width="50%">
-
-### Attack Lab
-Live execution engine. Pick a scenario, choose vulnerable or hardened mode, configure concurrency, and fire — results feed back into the timeline and evidence vault in real time.
-
-<img src="docs/screenshots/07-attack-lab.jpg" alt="Attack Lab" width="100%"/>
-
-</td>
-</tr>
-</table>
+<br/>
 
 <div align="center">
-<img src="docs/screenshots/08-runs.jpg" alt="Research Runs" width="80%"/>
-<p><em>Research Runs — 43 recorded executions with filter chips and JSON export</em></p>
+<img src="docs/screenshots/08-runs.jpg" alt="Research Runs" width="700"/>
+<br/>
+<sub><b>Research Runs — 43 recorded executions with result filter chips and JSON export</b></sub>
 </div>
 
 ---
@@ -112,9 +81,10 @@ Live execution engine. Pick a scenario, choose vulnerable or hardened mode, conf
 - Per-request swimlane rendering on an HTML Canvas
 - Scrubable playback with frame-step controls
 - Race-window overlays drawn between the earliest READ and the last WRITE in a concurrent group
-- Event markers (REQUEST_START, BALANCE_READ, BALANCE_WRITE, RESPONSE_OK, RESPONSE_ERR) with hover detail
+- Event markers with hover detail: REQUEST_START, BALANCE_READ, BALANCE_WRITE, RESPONSE_OK, RESPONSE_ERR
 
 ### Vulnerable + Hardened Fixtures
+
 Every scenario ships two Python fixture implementations:
 
 | Fixture | Pattern |
@@ -126,7 +96,7 @@ Every scenario ships two Python fixture implementations:
 | `db_toctou_vulnerable.py` | Stale cached-read before external write |
 | `db_toctou_hardened.py` | Lock wraps cache read + store update atomically |
 | `fs_toctou_vulnerable.py` | `os.path.exists` then `open()` — classic TOCTOU |
-| `fs_toctou_hardened.py` | `O_CREAT | O_EXCL` — atomic existence + creation |
+| `fs_toctou_hardened.py` | `O_CREAT \| O_EXCL` — atomic existence + creation |
 
 ### Evidence-Based Research
 - 49 captured evidence records tied to specific run IDs and scenarios
@@ -134,7 +104,9 @@ Every scenario ships two Python fixture implementations:
 - Per-result filter chips across Evidence Vault and Runs pages
 - JSON export for any filtered view
 
-### 20 Curated Scenarios
+---
+
+## 20 Curated Scenarios
 
 | ID | Name | Category | Severity |
 |----|------|----------|----------|
@@ -209,12 +181,12 @@ racepoint/
 | Tool | Version |
 |------|---------|
 | Node.js | 18+ |
-| Python | 3.11+ (asyncio.Barrier requires 3.11) |
+| Python | 3.11+ (`asyncio.Barrier` requires 3.11) |
 | npm | 9+ |
 
 ### Demo Mode — No Python Required
 
-The frontend ships with a complete synthetic dataset (43 runs, 49 evidence records, 20 scenarios, 16 comparisons). No backend needed.
+The frontend ships with a complete synthetic dataset. No backend needed.
 
 ```bash
 git clone https://github.com/het-P301204/racepoint.git
@@ -263,13 +235,11 @@ All 26 tests pass. They cover the coordinator, race-window detector, invariant c
 | Activity Entries | 40 | `apps/web/src/data/activity.ts` |
 | Research Notes | 8 | `apps/web/src/data/notes.ts` |
 
-Every run has a paired evidence record, invariant result, race-window list, and timing data. Every scenario has a corresponding vulnerable + hardened comparison.
-
 ---
 
 ## Design System
 
-RACEPOINT uses a warm, dark palette — no cold blues in any background.
+No cold blues anywhere in the UI.
 
 | Token | Hex | Use |
 |-------|-----|-----|
@@ -283,36 +253,6 @@ RACEPOINT uses a warm, dark palette — no cold blues in any background.
 | Plum | `#594451` | Shared state, distributed |
 
 Typography: **Manrope** (UI) + **IBM Plex Mono** (code, IDs, timestamps)
-
----
-
-## Security Boundaries
-
-All experiments run **locally and against explicitly authorized fixtures only**.
-
-- No arbitrary external targets — all fixtures bind to `127.0.0.1`
-- Bounded concurrency: maximum 8 concurrent requests per run
-- Request cap: maximum 20 requests per run
-- Filesystem operations confined to `lab/data/tmp/`
-- Lab services never accept external connections
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend framework | React 18 + TypeScript 5 + Vite 5 |
-| State management | Zustand |
-| Charts | Recharts |
-| Animation | Framer Motion |
-| Icons | Lucide React |
-| Backend | FastAPI + uvicorn |
-| Async DB | aiosqlite |
-| Validation | Pydantic v2 |
-| Concurrency engine | Python asyncio (asyncio.Barrier) |
-| Test runner | pytest + pytest-asyncio |
-| Monorepo | npm workspaces |
 
 ---
 
@@ -343,6 +283,34 @@ All experiments run **locally and against explicitly authorized fixtures only**.
 
 ---
 
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend framework | React 18 + TypeScript 5 + Vite 5 |
+| State management | Zustand |
+| Charts | Recharts |
+| Animation | Framer Motion |
+| Icons | Lucide React |
+| Backend | FastAPI + uvicorn |
+| Async DB | aiosqlite |
+| Validation | Pydantic v2 |
+| Concurrency engine | Python asyncio (`asyncio.Barrier`) |
+| Test runner | pytest + pytest-asyncio |
+| Monorepo | npm workspaces |
+
+---
+
+## Security Boundaries
+
+- All experiments run against **local, disposable fixtures only** — no arbitrary external targets
+- Bounded concurrency: max 8 concurrent requests per run
+- Request cap: max 20 requests per run
+- Filesystem operations confined to `lab/data/tmp/`
+- Lab services bind to `127.0.0.1` only
+
+---
+
 ## Windows Notes
 
 - Requires **Python 3.11+** — `asyncio.Barrier` was added in 3.11
@@ -354,7 +322,5 @@ All experiments run **locally and against explicitly authorized fixtures only**.
 <div align="center">
 
 *RACEPOINT is a security research tool. All demonstrations run against explicitly authorized local fixtures.*
-
-**[Explore the Platform →](http://localhost:5178)**
 
 </div>
